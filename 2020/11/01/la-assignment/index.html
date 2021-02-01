@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="dqhl76">
+    
+    <title>
+        
+            PageRank学习笔记 |
+        
+        dqhl76&#39;s blog
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/images/avatar.svg">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"dqhl76.com","root":"/","language":"zh","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.svg","favicon":"/images/avatar.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"似此星辰非昨夜 为谁风露立中宵"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.0"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days age","week":"%s weeks age","month":"%s months age","year":"%s years age"};
+  </script>
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="dqhl's blog" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                dqhl76&#39;s blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                ABOUT
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">ABOUT</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">PageRank学习笔记</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">dqhl76</span>
+                        
+                            <span class="author-label">Lv1</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2020-11-01 10:00:00
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>1.3k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>6 Mins</span>
+        </span>
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <blockquote>
+<p>  出于线性代数Assignment的需要，学习了网页搜索领域很有名的PageRank算法，决定在这里记录下一些笔记</p>
+</blockquote>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>PageRank简称PR，Google创始人拉里佩奇在提出此算法后创建了Google搜索引擎，其可以为网页打分以决定网页的排序，虽然搜索引擎对于网页的排序还由其他一些因素影响（<del>比如某度根据就给的💸有关</del>），但PageRank算法提供了一个很重要的判断标准。</p>
+<blockquote>
+<p>  也有人说PageRank算法是由创始人拉里佩奇（Larry Page）的名字命名的</p>
+</blockquote>
+<p>PageRank的核心原理基于一个重要的假设：一个重要的网站往往会被很多的网站所引用（指向）</p>
+<p>基于这个假设，如果一个网站被很多网站指向，或者是被本身“权值”比较高的网站所指向，那么这个网站也是一个较为重要的网站</p>
+<h2 id="一个小的例子"><a href="#一个小的例子" class="headerlink" title="一个小的例子"></a>一个小的例子</h2><p>核心的思想不太难，我们直接从一个小的例子说起。</p>
+<p>现在有四个网站，A B C D，我们将四个网站抽象为图中的的四个节点（Node），并且将一个网站指向另一个网站的链接抽象为一条边（Edge），于是一个图诞生了</p>
+<p>（直接用的作业里面画的图，字母和数字一一对应）</p>
+<p><img src="https://www.hualigs.cn/image/6017add63584f.jpg" alt="figure0"></p>
+<p>每个网站有一个最初的PageRank值，在最初的算法中，这个值是1，但为了满足概率介于1和0之间，所以我们将他们的值都设置为$\frac{1}{n}$，在这个例子中，这个值是0.25</p>
+<p>对于一个网站的PR值，我们称为$PR()$</p>
+<p>对于A节点，C节点和D节点指向了它，所以我们可以得到下面的式子：</p>
+<p>$PR(A) = PR(C) + PR(D)$</p>
+<p>但是，D不仅指向了A，还指向了C，所以，D给A投的票相当于$\frac{1}{2}PR(D)$，因此，刚才的式子应该是：</p>
+<p>$PR(A) = PR(C) + \frac{PR(D)}{2}$</p>
+<p>如果我们对于将页面向外指向的链接总数为$L()$</p>
+<p>那么，对于点A，就有：</p>
+<p>$PR(A) = \frac{PR(C)}{L(C)} + \frac{PR(D)}{L(D)}$</p>
+<p>同理可得别的点的PR值，并且通过不断的递归，这个值将趋于稳定</p>
+<p>同样可以采用矩阵的方式计算：</p>
+<p>$A  = \begin{bmatrix}<br> 0 &amp; 0 &amp; 1 &amp; \frac{1}{2}\<br> \frac{1}{3} &amp; 0 &amp; 0 &amp; 0\<br> \frac{1}{3} &amp; \frac{1}{2} &amp; 0 &amp; \frac{1}{2}\<br> \frac{1}{3} &amp; \frac{1}{2} &amp; 0 &amp; 0<br>\end{bmatrix}$</p>
+<p>第n列表示，节点N向外指向的点</p>
+<p>比如，第1列，第2 3 4行 为 $\frac{1}{3}$，表示A指向3个节点，分别是节点BCD</p>
+<p>$x  = \begin{bmatrix}<br> \frac{1}{4}\<br> \frac{1}{4}\<br> \frac{1}{4}\<br> \frac{1}{4}<br>\end{bmatrix}$</p>
+<p>我们不断计算$x = Ax$</p>
+<p>就可以得到一个稳定的$x$矩阵，这就是这四个网站的PageRank值</p>
+<h2 id="一个问题"><a href="#一个问题" class="headerlink" title="一个问题"></a>一个问题</h2><p>为了方便理解，我们把“随机浏览者”的概念简化。</p>
+<p>我们在日常生活上网时，不只是从一个网站点到另一个网站，还有可能是通过上方的地址栏直接输入url，跳转到对应的网址，所以我们在计算PageRank值时，引入一个阻尼系数d（damping factor），根据统计，这个直接输入网址的概率大概四0.85，其意义是：任意时刻，用户访问到某页面后继续访问下一个页面的概率，相对应的1-d则是用户停止点击，随机浏览新网页的概率</p>
+<p>于是我们就得到了最终的求一个页面PageRank值的公式：</p>
+<p>$\begin{equation}<br>PR_{t+1}(P_{i}) = \sum_{P_{j} }^{}PR_{t} \times \frac{P_{j} }{C(P_{j}) }<br>\end{equation}$</p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>下面是我爬取学校网站，得到数据后，对其进行的排序的一个例子</p>
+<p>We noticed that the links related to BJUT were not been indexed by Baidu or Google, So we apply the PageRank algorithm to BJUT’s web pages. We use <code>MATLAB R2020b</code> to implement this algorithm and all data is obtained using python crawler.</p>
+<p>Create a directed graph with the sparse adjacency matrix <code>G</code>, using the urls contained in <code>name</code> as node names.</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">G = digraph(s,t,[],name)</span><br></pre></td></tr></table></figure>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">G = </span><br><span class="line">  digraph - with <span class="keyword">properties</span>:</span><br><span class="line"></span><br><span class="line">    Edges: [<span class="number">209</span>×<span class="number">1</span> <span class="built_in">table</span>]</span><br><span class="line">    Nodes: [<span class="number">55</span>×<span class="number">1</span> <span class="built_in">table</span>]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>We set the damping factor 0.85, and use 200 iterations to compute the PageRank of sparse adjacency matrix G.  And add the scores and degree information into the nodes tables. </p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pr = centrality(G,<span class="string">&#x27;pagerank&#x27;</span>,<span class="string">&#x27;MaxIterations&#x27;</span>,<span class="number">200</span>,<span class="string">&#x27;FollowProbability&#x27;</span>,<span class="number">0.85</span>);</span><br><span class="line">G.Nodes.PageRank = pr;</span><br><span class="line">G.Nodes.InDegree = indegree(G);</span><br><span class="line">G.Nodes.OutDegree = outdegree(G);</span><br></pre></td></tr></table></figure>
+<p>Print the top 25 scores.</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">G.Nodes(<span class="number">1</span>:<span class="number">25</span>,:)</span><br><span class="line"><span class="built_in">ans</span> = <span class="number">25</span>×<span class="number">4</span> <span class="built_in">table</span></span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="center">Name</th>
+<th align="center">PageRank</th>
+<th align="center">InDegree</th>
+<th align="center">OutDegree</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="center">‘<a class="link"   target="_blank" rel="noopener" href="http://www.bjut.edu.cn/&#39;" >http://www.bjut.edu.cn/&#39;<i class="fas fa-external-link-alt"></i></a></td>
+<td align="center">0.0552</td>
+<td align="center">20</td>
+<td align="center">13</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="center">‘<a class="link"   target="_blank" rel="noopener" href="http://news.bjut.edu.cn/&#39;" >http://news.bjut.edu.cn/&#39;<i class="fas fa-external-link-alt"></i></a></td>
+<td align="center">0.0185</td>
+<td align="center">7</td>
+<td align="center">4</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="center">‘<a class="link"   target="_blank" rel="noopener" href="https://app.bjut.edu.cn/&#39;" >https://app.bjut.edu.cn/&#39;<i class="fas fa-external-link-alt"></i></a></td>
+<td align="center">0.0110</td>
+<td align="center">2</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="center">‘<a class="link"   target="_blank" rel="noopener" href="http://60.bjut.edu.cn/&#39;" >http://60.bjut.edu.cn/&#39;<i class="fas fa-external-link-alt"></i></a></td>
+<td align="center">0.0455</td>
+<td align="center">3</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="center">‘<a class="link"   target="_blank" rel="noopener" href="http://portal2nd.bjut.edu.cn/&#39;" >http://portal2nd.bjut.edu.cn/&#39;<i class="fas fa-external-link-alt"></i></a></td>
+<td align="center">0.0067</td>
+<td align="center">4</td>
+<td align="center">40</td>
+</tr>
+<tr>
+<td align="left">6</td>
+<td align="center">‘<a class="link"   target="_blank" rel="noopener" href="http://eol2018.bjut.edu.cn/&#39;" >http://eol2018.bjut.edu.cn/&#39;<i class="fas fa-external-link-alt"></i></a></td>
+<td align="center">0.0110</td>
+<td align="center">2</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="left">7</td>
+<td align="center">‘<a class="link"   target="_blank" rel="noopener" href="http://lib.bjut.edu.cn/&#39;" >http://lib.bjut.edu.cn/&#39;<i class="fas fa-external-link-alt"></i></a></td>
+<td align="center">0.0191</td>
+<td align="center">6</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="left">8</td>
+<td align="center">‘<a class="link"   target="_blank" rel="noopener" href="http://iptv.bjut.edu.cn/&#39;" >http://iptv.bjut.edu.cn/&#39;<i class="fas fa-external-link-alt"></i></a></td>
+<td align="center">0.0422</td>
+<td align="center">2</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="left">9</td>
+<td align="center">‘<a class="link"   target="_blank" rel="noopener" href="http://gdjwgl.bjut.edu.cn/&#39;" >http://gdjwgl.bjut.edu.cn/&#39;<i class="fas fa-external-link-alt"></i></a></td>
+<td align="center">0.0505</td>
+<td align="center">3</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="left">10</td>
+<td align="center">‘<a class="link"   target="_blank" rel="noopener" href="http://xgxt.bjut.edu.cn/&#39;" >http://xgxt.bjut.edu.cn/&#39;<i class="fas fa-external-link-alt"></i></a></td>
+<td align="center">0.0422</td>
+<td align="center">2</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="left">11</td>
+<td align="center">‘<a class="link"   target="_blank" rel="noopener" href="https://cwc.bjut.edu.cn/&#39;" >https://cwc.bjut.edu.cn/&#39;<i class="fas fa-external-link-alt"></i></a></td>
+<td align="center">0.0112</td>
+<td align="center">3</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="left">12</td>
+<td align="center">‘<a class="link"   target="_blank" rel="noopener" href="http://bjutcie.bjut.edu.cn&/#39;" >http://bjutcie.bjut.edu.cn&#39;<i class="fas fa-external-link-alt"></i></a></td>
+<td align="center">0.0089</td>
+<td align="center">2</td>
+<td align="center">3</td>
+</tr>
+<tr>
+<td align="left">13</td>
+<td align="center">‘<a class="link"   target="_blank" rel="noopener" href="http://facte.bjut.edu.cn/&#39;" >http://facte.bjut.edu.cn/&#39;<i class="fas fa-external-link-alt"></i></a></td>
+<td align="center">0.0081</td>
+<td align="center">2</td>
+<td align="center">4</td>
+</tr>
+<tr>
+<td align="left">14</td>
+<td align="center">‘<a class="link"   target="_blank" rel="noopener" href="http://my.bjut.edu.cn/&#39;" >http://my.bjut.edu.cn/&#39;<i class="fas fa-external-link-alt"></i></a></td>
+<td align="center">0.0929</td>
+<td align="center">4</td>
+<td align="center">1</td>
+</tr>
+</tbody></table>
+<p>Extract and draw a subgraph that contains all nodes with a score greater than 0.005. Color the graph nodes according to their PageRank score.</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">H = subgraph(G,<span class="built_in">find</span>(G.Nodes.PageRank &gt; <span class="number">0.005</span>));</span><br><span class="line"><span class="built_in">plot</span>(H,<span class="string">&#x27;NodeLabel&#x27;</span>,&#123;&#125;,<span class="string">&#x27;NodeCData&#x27;</span>,H.Nodes.PageRank,<span class="string">&#x27;Layout&#x27;</span>,<span class="string">&#x27;force&#x27;</span>);</span><br><span class="line">title(<span class="string">&#x27;Websites linked to https://www.bjut.edu.cn&#x27;</span>)</span><br><span class="line">colorbar</span><br></pre></td></tr></table></figure>
+<p><img src="https://www.hualigs.cn/image/6017ae89f05bc.jpg"></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：PageRank学习笔记</li>
+        <li>Post author：dqhl76</li>
+        <li>Create time：2020-11-01 10:00:00</li>
+        <li>
+            Post link：https://dqhl76.com/2020/11/01/la-assignment/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2021/02/01/bing-cha-ji/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">并查集板子题和kuangbin的专题五</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">dqhl76</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.0</a>
+        </div>
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+            <li class="tools-item rss flex-center">
+                <a class="flex-center"
+                   href="/atom.xml"
+                   target="_blank"
+                >
+                    <i class="fas fa-rss"></i>
+                </a>
+            </li>
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/header-shrink.js"></script><script src="/js/back2top.js"></script><script src="/js/dark-light-toggle.js"></script>
+
+
+    <script src="/js/local-search.js"></script>
+
+
+
+    <script src="/js/code-copy.js"></script>
+
+
+
+
+<div class="post-scripts">
+    
+</div>
+
+
+
+</body>
+</html>
